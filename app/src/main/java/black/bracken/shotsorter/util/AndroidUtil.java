@@ -2,6 +2,7 @@ package black.bracken.shotsorter.util;
 
 import android.content.Context;
 import android.graphics.Point;
+import android.os.Build;
 import android.view.Display;
 import android.view.WindowManager;
 
@@ -15,6 +16,10 @@ import black.bracken.shotsorter.ShotSorter;
 public final class AndroidUtil {
 
     private AndroidUtil() {
+    }
+
+    public static boolean higherThan(int version) {
+        return version <= Build.VERSION.SDK_INT;
     }
 
     public static int getHardwareWidth() {

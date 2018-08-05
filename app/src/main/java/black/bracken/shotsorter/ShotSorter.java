@@ -1,16 +1,30 @@
 package black.bracken.shotsorter;
 
-import android.app.Application;
-import android.util.Log;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.Service;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
+import android.os.IBinder;
+import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
+import android.widget.Toast;
+
+import black.bracken.shotsorter.util.AndroidUtil;
 
 /**
- * An application named ShotSorter.
+ * A stationed service of ShotSorter.
  *
  * @author BlackBracken
  */
-public final class ShotSorter extends Application {
+public final class ShotSorter extends Service {
 
-    private static ShotSorter instance;
+    private static final String INITIALIZE_MESSAGE = "ShotSorted has been initialized";
+    private static final String NOTIFICATION_TITLE = "ShotSorter is running";
+    private static final String NOTIFICATION_ID = "foreground";
+
+    private static ShotSorter instance = null;
 
     private SimpleScreenshotObserver screenshotObserver;
 
@@ -18,15 +32,58 @@ public final class ShotSorter extends Application {
         return instance;
     }
 
+    public static void startServiceIfNot(Context context) {
+        if (instance == null) context.startActivity(new Intent(context, ShotSorter.class));
+    }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null; // not implemented
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
 
-        // TODO: remove debug message
-        this.screenshotObserver = new SimpleScreenshotObserver(path -> Log.d("ShotSorter", "PATH: " + path));
         this.screenshotObserver.startWatching();
 
         instance = this;
+
+        Toast.makeText(this, INITIALIZE_MESSAGE, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        instance = null;
+        this.screenshotObserver.stopWatching();
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        NotificationCompat.Builder builder;
+        if (AndroidUtil.higherThan(Build.VERSION_CODES.O)) {
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            assert notificationManager != null;
+
+            if (notificationManager.getNotificationChannel(NOTIFICATION_ID) == null) {
+                notificationManager.createNotificationChannel(
+                        new NotificationChannel(NOTIFICATION_ID, NOTIFICATION_TITLE, NotificationManager.IMPORTANCE_DEFAULT)
+                );
+            }
+            builder = new NotificationCompat.Builder(this, NOTIFICATION_ID);
+        } else {
+            builder = new NotificationCompat.Builder(this);
+        }
+
+        builder.setContentTitle(NOTIFICATION_TITLE);
+        builder.setSmallIcon(R.drawable.ic_launcher_background);
+
+        startForeground(1, builder.build());
+
+        return START_STICKY;
     }
 
 }
