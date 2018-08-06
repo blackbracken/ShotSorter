@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.widget.Toast;
 
 import black.bracken.shotsorter.util.AndroidUtil;
@@ -20,7 +21,7 @@ import black.bracken.shotsorter.util.AndroidUtil;
  */
 public final class ShotSorter extends Service {
 
-    private static final String INITIALIZE_MESSAGE = "ShotSorted has been initialized";
+    private static final String INITIALIZE_MESSAGE = "ShotSorter has been initialized";
     private static final String NOTIFICATION_TITLE = "ShotSorter is running";
     private static final String NOTIFICATION_ID = "foreground";
 
@@ -33,7 +34,7 @@ public final class ShotSorter extends Service {
     }
 
     public static void startServiceIfNot(Context context) {
-        if (instance == null) context.startActivity(new Intent(context, ShotSorter.class));
+        if (instance == null) context.startService(new Intent(context, ShotSorter.class));
     }
 
     @Nullable
@@ -46,6 +47,8 @@ public final class ShotSorter extends Service {
     public void onCreate() {
         super.onCreate();
 
+        // debug
+        this.screenshotObserver = new SimpleScreenshotObserver(path -> Log.d("ShotSorter", path));
         this.screenshotObserver.startWatching();
 
         instance = this;
