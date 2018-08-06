@@ -9,7 +9,6 @@ import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 import android.widget.Toast;
 
 import black.bracken.shotsorter.util.AndroidUtil;
@@ -34,7 +33,15 @@ public final class ShotSorter extends Service {
     }
 
     public static void startServiceIfNot(Context context) {
-        if (instance == null) context.startService(new Intent(context, ShotSorter.class));
+        if (instance == null) {
+            Intent intent = new Intent(context, ShotSorter.class);
+
+            if (AndroidUtil.higherThan(Build.VERSION_CODES.O)) {
+                context.startForegroundService(intent);
+            } else {
+                context.startService(intent);
+            }
+        }
     }
 
     @Nullable
@@ -48,7 +55,7 @@ public final class ShotSorter extends Service {
         super.onCreate();
 
         // debug
-        this.screenshotObserver = new SimpleScreenshotObserver(path -> Log.d("ShotSorter", path));
+        this.screenshotObserver = new SimpleScreenshotObserver(path -> Toast.makeText(this, path, Toast.LENGTH_SHORT).show());
         this.screenshotObserver.startWatching();
 
         instance = this;
@@ -73,7 +80,7 @@ public final class ShotSorter extends Service {
 
             if (notificationManager.getNotificationChannel(NOTIFICATION_ID) == null) {
                 notificationManager.createNotificationChannel(
-                        new NotificationChannel(NOTIFICATION_ID, NOTIFICATION_TITLE, NotificationManager.IMPORTANCE_DEFAULT)
+                        new NotificationChannel(NOTIFICATION_ID, NOTIFICATION_TITLE, NotificationManager.IMPORTANCE_LOW)
                 );
             }
             builder = new NotificationCompat.Builder(this, NOTIFICATION_ID);

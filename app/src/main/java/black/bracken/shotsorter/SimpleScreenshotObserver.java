@@ -3,7 +3,6 @@ package black.bracken.shotsorter;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.os.FileObserver;
-import android.os.SystemClock;
 import android.support.annotation.Nullable;
 
 import java.io.File;
@@ -21,23 +20,19 @@ import black.bracken.shotsorter.util.AndroidUtil;
 public final class SimpleScreenshotObserver extends FileObserver {
 
     private static final String IMAGE_EXT = ".png";
-    private static final String SCREENSHOT_DIR_PATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath().substring(1)
+    private static final String SCREENSHOT_DIR_PATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath()
             + File.separator + "Screenshots" + File.separator;
-    private static final int SAVING_COOL_TIME = 1000; // ms
 
     private final Consumer<String> action;
 
     public SimpleScreenshotObserver(final Consumer<String> action) {
-        super(SCREENSHOT_DIR_PATH, FileObserver.CREATE);
+        super(SCREENSHOT_DIR_PATH, FileObserver.CLOSE_WRITE);
 
         this.action = action;
     }
 
-    @Override
     public final void onEvent(int event, @Nullable String fileName) {
         if (fileName == null || !fileName.endsWith(IMAGE_EXT)) return;
-
-        SystemClock.sleep(SAVING_COOL_TIME);
 
         // HACK: make Bitmap without InputStream for brevity
         try (FileInputStream stream = new FileInputStream(new File(SCREENSHOT_DIR_PATH + fileName))) {
