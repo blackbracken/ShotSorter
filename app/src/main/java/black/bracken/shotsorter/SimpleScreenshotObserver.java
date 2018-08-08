@@ -1,6 +1,7 @@
 package black.bracken.shotsorter;
 
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Environment;
 import android.os.FileObserver;
 import android.support.annotation.Nullable;
@@ -23,9 +24,9 @@ public final class SimpleScreenshotObserver extends FileObserver {
     private static final String SCREENSHOT_DIR_PATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath()
             + File.separator + "Screenshots" + File.separator;
 
-    private final Consumer<String> action;
+    private final Consumer<Uri> action;
 
-    public SimpleScreenshotObserver(final Consumer<String> action) {
+    public SimpleScreenshotObserver(final Consumer<Uri> action) {
         super(SCREENSHOT_DIR_PATH, FileObserver.CLOSE_WRITE);
 
         this.action = action;
@@ -34,14 +35,14 @@ public final class SimpleScreenshotObserver extends FileObserver {
     public final void onEvent(int event, @Nullable String fileName) {
         if (fileName == null || !fileName.endsWith(IMAGE_EXT)) return;
 
-        // HACK: make Bitmap without InputStream for brevity
-        try (FileInputStream stream = new FileInputStream(new File(SCREENSHOT_DIR_PATH + fileName))) {
+        File file = new File(SCREENSHOT_DIR_PATH + fileName);
+        try (FileInputStream stream = new FileInputStream(file)) {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
             BitmapFactory.decodeStream(stream, null, options);
 
             if (options.outWidth == AndroidUtil.getHardwareWidth() && options.outHeight == AndroidUtil.getHardwareHeight()) {
-                action.accept(fileName);
+                action.accept(Uri.fromFile(file));
             }
         } catch (IOException ex) {
             ex.printStackTrace();

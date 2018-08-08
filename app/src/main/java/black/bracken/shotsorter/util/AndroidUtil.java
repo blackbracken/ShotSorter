@@ -22,6 +22,10 @@ public final class AndroidUtil {
         return version <= Build.VERSION.SDK_INT;
     }
 
+    public static int getOrientation() {
+        return ShotSorter.getInstance().getResources().getConfiguration().orientation;
+    }
+
     public static int getHardwareWidth() {
         return getRealSize().x;
     }

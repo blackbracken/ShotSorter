@@ -9,8 +9,10 @@ import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.widget.Toast;
 
+import black.bracken.shotsorter.activity.SortActivity;
 import black.bracken.shotsorter.util.AndroidUtil;
 
 /**
@@ -19,6 +21,8 @@ import black.bracken.shotsorter.util.AndroidUtil;
  * @author BlackBracken
  */
 public final class ShotSorter extends Service {
+
+    public static final String URI_KEY = "URI";
 
     private static final String INITIALIZE_MESSAGE = "ShotSorter has been initialized";
     private static final String NOTIFICATION_TITLE = "ShotSorter is running";
@@ -54,8 +58,12 @@ public final class ShotSorter extends Service {
     public void onCreate() {
         super.onCreate();
 
-        // debug
-        this.screenshotObserver = new SimpleScreenshotObserver(path -> Toast.makeText(this, path, Toast.LENGTH_SHORT).show());
+        this.screenshotObserver = new SimpleScreenshotObserver(uri -> {
+            Intent sortIntent = new Intent(this, SortActivity.class);
+            sortIntent.putExtra(URI_KEY, uri);
+
+            startActivity(sortIntent);
+        });
         this.screenshotObserver.startWatching();
 
         instance = this;

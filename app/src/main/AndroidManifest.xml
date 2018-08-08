@@ -20,6 +20,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.SortActivity"
+            android:theme="@style/TransparencyTheme" />
+
         <receiver android:name=".listener.AndroidBootListener">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
