@@ -2,10 +2,10 @@
     <string name="app_name">ShotSorter</string>
     <string name="turn_on">有効にする</string>
     <string name="turn_off">無効にする</string>
-    <string name="message_toggle_startup">Android起動時に自動で有効にする</string>
+    <string name="message_toggle_startup">Android起動時にバックグラウンドで動作させる</string>
     <string name="text_delay_remove">自動削除</string>
     <string name="hint_delay_remove">X秒後に削除</string>
     <string name="button_change_destination">保存先の変更</string>
-    <string name="button_exit">終了</string>
-    <string name="button_exit_without_applying">保存せず終了</string>
+    <string name="button_exit">適用</string>
+    <string name="button_exit_without_applying">適用せず終了</string>
 </resources>
