@@ -20,7 +20,7 @@ import black.bracken.shotsorter.util.ContextUtil;
  */
 public final class MainActivity extends AppCompatActivity {
 
-    private static final int PERMISSION_STORAGE_CODE = 8931;
+    private static final int CODE_PERMISSION_STORAGE = 8931;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,7 @@ public final class MainActivity extends AppCompatActivity {
 
         // requests permission to read & write storage
         if (!ContextUtil.hasPermission(this, Manifest.permission_group.STORAGE)) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_STORAGE_CODE);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, CODE_PERMISSION_STORAGE);
         }
 
         final SharedPreferences preferences = getSharedPreferences(PreferencesKeys.ROOT, Context.MODE_PRIVATE);
