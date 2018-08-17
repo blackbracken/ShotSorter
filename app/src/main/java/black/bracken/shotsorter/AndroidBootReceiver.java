@@ -1,23 +1,24 @@
-package black.bracken.shotsorter.listener;
+package black.bracken.shotsorter;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import black.bracken.shotsorter.constant.PreferencesKeys;
 import black.bracken.shotsorter.service.SortService;
 
 /**
- * Androidシステムの起動時に呼び出されるリスナ.
- *
  * @author BlackBracken
  */
-public final class AndroidBootListener extends BroadcastReceiver {
+public final class AndroidBootReceiver extends BroadcastReceiver {
 
     @SuppressLint("UnsafeProtectedBroadcastReceiver")
     @Override
     public void onReceive(Context context, Intent intent) {
-        SortService.start(context);
+        if (context.getSharedPreferences(PreferencesKeys.ROOT, Context.MODE_PRIVATE).getBoolean(PreferencesKeys.RUN_ON_STARTUP, false)) {
+            SortService.start(context);
+        }
     }
 
 }

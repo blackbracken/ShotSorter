@@ -27,9 +27,12 @@ public final class SortService extends Service {
     private static final String NOTIFICATION_TITLE = "SortService is running";
     private static final String NOTIFICATION_ID = "foreground";
 
+    // LINK: https://stackoverflow.com/questions/600207/how-to-check-if-a-service-is-running-on-android
+    private static boolean isRunning = false;
+
     private SimpleScreenshotObserver screenshotObserver;
 
-    public static void start(Context context) { // :(
+    public static void start(Context context) {
         Intent intent = new Intent(context, SortService.class);
 
         if (AndroidUtil.higherThan(Build.VERSION_CODES.O)) {
@@ -37,6 +40,10 @@ public final class SortService extends Service {
         } else {
             context.startService(intent);
         }
+    }
+
+    public static boolean isRunning() {
+        return isRunning;
     }
 
     @Nullable
@@ -48,6 +55,7 @@ public final class SortService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        isRunning = true;
 
         this.screenshotObserver = new SimpleScreenshotObserver(this, uri -> {
             Intent sortIntent = new Intent(this, SortActivity.class);
@@ -63,6 +71,7 @@ public final class SortService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        isRunning = false;
 
         this.screenshotObserver.stopWatching();
     }
