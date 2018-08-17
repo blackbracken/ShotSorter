@@ -21,9 +21,10 @@ import black.bracken.shotsorter.util.ContextUtil;
  */
 public final class SimpleScreenshotObserver extends FileObserver {
 
-    private static final String IMAGE_EXT = ".png";
-    private static final String SCREENSHOT_DIR_PATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath()
+    public static final String SCREENSHOT_DIR_PATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath()
             + File.separator + "Screenshots" + File.separator;
+
+    private static final String IMAGE_EXT = ".png";
 
     private final Consumer<Uri> action;
     private final int displayWidth, displayHeight;

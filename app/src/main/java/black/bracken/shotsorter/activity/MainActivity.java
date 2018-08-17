@@ -29,7 +29,10 @@ public final class MainActivity extends AppCompatActivity {
 
         // requests permission to read & write storage
         if (!ContextUtil.hasPermission(this, Manifest.permission_group.STORAGE)) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, CODE_PERMISSION_STORAGE);
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+            }, CODE_PERMISSION_STORAGE);
         }
 
         final SharedPreferences preferences = getSharedPreferences(PreferencesKeys.ROOT, Context.MODE_PRIVATE);

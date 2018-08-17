@@ -17,19 +17,19 @@
             android:orientation="horizontal">
 
             <Switch
-                android:id="@+id/switch_auto_remove"
+                android:id="@+id/switch_delay_remove"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/text_after_remove" />
+                android:text="@string/text_delay_remove" />
 
             <EditText
-                android:id="@+id/edit_removal_seconds"
+                android:id="@+id/edit_delay_seconds"
                 android:layout_width="139dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="5"
-                android:hint="@string/hint_remover"
+                android:hint="@string/hint_delay_remove"
                 android:inputType="numberDecimal" />
 
         </LinearLayout>

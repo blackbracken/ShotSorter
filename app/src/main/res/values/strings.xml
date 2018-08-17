@@ -3,8 +3,8 @@
     <string name="turn_on">ENABLE</string>
     <string name="turn_off">DISABLE</string>
     <string name="message_toggle_startup">Runs on start-up</string>
-    <string name="text_after_remove">Auto remover</string>
-    <string name="hint_remover">After X seconds</string>
+    <string name="text_delay_remove">Delay remove</string>
+    <string name="hint_delay_remove">After X seconds</string>
     <string name="button_change_destination">Change the destination</string>
     <string name="button_exit">Exit</string>
     <string name="button_exit_without_applying">Exit without apply</string>
