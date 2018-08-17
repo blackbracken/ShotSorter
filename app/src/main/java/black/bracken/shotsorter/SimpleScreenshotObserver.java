@@ -1,5 +1,6 @@
 package black.bracken.shotsorter;
 
+import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
@@ -11,7 +12,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.function.Consumer;
 
-import black.bracken.shotsorter.util.AndroidUtil;
+import black.bracken.shotsorter.util.ContextUtil;
 
 /**
  * スクリーンショットを撮ることに反応する単純なオブザーバ.
@@ -25,11 +26,14 @@ public final class SimpleScreenshotObserver extends FileObserver {
             + File.separator + "Screenshots" + File.separator;
 
     private final Consumer<Uri> action;
+    private final int displayWidth, displayHeight;
 
-    public SimpleScreenshotObserver(final Consumer<Uri> action) {
+    public SimpleScreenshotObserver(Context context, Consumer<Uri> action) {
         super(SCREENSHOT_DIR_PATH, FileObserver.CLOSE_WRITE);
 
         this.action = action;
+        this.displayWidth = ContextUtil.getHardwareWidth(context);
+        this.displayHeight = ContextUtil.getHardwareHeight(context);
     }
 
     public final void onEvent(int event, @Nullable String fileName) {
@@ -41,7 +45,8 @@ public final class SimpleScreenshotObserver extends FileObserver {
             options.inJustDecodeBounds = true;
             BitmapFactory.decodeStream(stream, null, options);
 
-            if (options.outWidth == AndroidUtil.getHardwareWidth() && options.outHeight == AndroidUtil.getHardwareHeight()) {
+            if (options.outWidth == displayWidth && options.outHeight == displayHeight
+                    || options.outWidth == displayHeight && options.outHeight == displayWidth) {
                 action.accept(Uri.fromFile(file));
             }
         } catch (IOException ex) {

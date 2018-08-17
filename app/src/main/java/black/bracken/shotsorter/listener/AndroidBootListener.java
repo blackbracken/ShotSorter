@@ -5,7 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import black.bracken.shotsorter.ShotSorter;
+import black.bracken.shotsorter.service.SortService;
 
 /**
  * Androidシステムの起動時に呼び出されるリスナ.
@@ -17,7 +17,7 @@ public final class AndroidBootListener extends BroadcastReceiver {
     @SuppressLint("UnsafeProtectedBroadcastReceiver")
     @Override
     public void onReceive(Context context, Intent intent) {
-        ShotSorter.startServiceIfNot(context);
+        SortService.start(context);
     }
 
 }
