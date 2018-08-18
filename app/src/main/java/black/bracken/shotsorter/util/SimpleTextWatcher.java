@@ -8,8 +8,10 @@ import android.text.TextWatcher;
  */
 public interface SimpleTextWatcher extends TextWatcher {
 
-    default void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {}
+    default void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+    }
 
-    default void afterTextChanged(Editable editable) {}
+    default void afterTextChanged(Editable editable) {
+    }
 
 }

@@ -29,7 +29,7 @@
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MEDIA_MOUNTED" />
-                <data android:scheme="file" />
+                <data android:scheme="image" />
             </intent-filter>
         </activity>
 

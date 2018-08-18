@@ -9,10 +9,9 @@ import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
-import android.widget.Toast;
 
 import black.bracken.shotsorter.R;
-import black.bracken.shotsorter.SimpleScreenshotObserver;
+import black.bracken.shotsorter.ScreenshotObserver;
 import black.bracken.shotsorter.activity.SortActivity;
 import black.bracken.shotsorter.util.AndroidUtil;
 
@@ -23,14 +22,13 @@ public final class SortService extends Service {
 
     public static final String URI_KEY = "URI";
 
-    private static final String MESSAGE_INITIALIZE = "SortService has been initialized";
     private static final String NOTIFICATION_TITLE = "SortService is running";
     private static final String NOTIFICATION_ID = "foreground";
 
     // LINK: https://stackoverflow.com/questions/600207/how-to-check-if-a-service-is-running-on-android
     private static boolean isRunning = false;
 
-    private SimpleScreenshotObserver screenshotObserver;
+    private ScreenshotObserver screenshotObserver;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, SortService.class);
@@ -49,7 +47,7 @@ public final class SortService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null; // not implemented
+        return null;
     }
 
     @Override
@@ -57,15 +55,13 @@ public final class SortService extends Service {
         super.onCreate();
         isRunning = true;
 
-        this.screenshotObserver = new SimpleScreenshotObserver(this, uri -> {
+        this.screenshotObserver = new ScreenshotObserver(this, uri -> {
             Intent sortIntent = new Intent(this, SortActivity.class);
             sortIntent.putExtra(URI_KEY, uri);
 
             startActivity(sortIntent);
         });
         this.screenshotObserver.startWatching();
-
-        Toast.makeText(this, MESSAGE_INITIALIZE, Toast.LENGTH_SHORT).show();
     }
 
     @Override

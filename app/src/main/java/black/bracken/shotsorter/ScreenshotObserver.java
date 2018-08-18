@@ -15,11 +15,9 @@ import java.util.function.Consumer;
 import black.bracken.shotsorter.util.ContextUtil;
 
 /**
- * スクリーンショットを撮ることに反応する単純なオブザーバ.
- *
  * @author BlackBracken
  */
-public final class SimpleScreenshotObserver extends FileObserver {
+public final class ScreenshotObserver extends FileObserver {
 
     public static final String SCREENSHOT_DIR_PATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath()
             + File.separator + "Screenshots" + File.separator;
@@ -29,7 +27,7 @@ public final class SimpleScreenshotObserver extends FileObserver {
     private final Consumer<Uri> action;
     private final int displayWidth, displayHeight;
 
-    public SimpleScreenshotObserver(Context context, Consumer<Uri> action) {
+    public ScreenshotObserver(Context context, Consumer<Uri> action) {
         super(SCREENSHOT_DIR_PATH, FileObserver.CLOSE_WRITE);
 
         this.action = action;
