@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.MainActivity">
+    tools:context=".view.activity.OperationActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/text_title"
+            android:id="@+id/textTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
@@ -25,21 +25,20 @@
             android:textSize="30sp" />
 
         <ImageView
-            android:id="@+id/image_title"
+            android:id="@+id/imageTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="64dp"
             app:srcCompat="@drawable/title_icon" />
 
         <ToggleButton
-            android:id="@+id/toggle_service"
+            android:id="@+id/toggleActivate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textOff="@string/turn_on"
-            android:textOn="@string/turn_off" />
+            android:text="@string/button_activate" />
 
         <Switch
-            android:id="@+id/switch_startup"
+            android:id="@+id/switchStartup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="36dp"

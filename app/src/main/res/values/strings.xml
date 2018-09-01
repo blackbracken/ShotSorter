@@ -1,10 +1,9 @@
 <resources>
     <string name="app_name">ShotSorter</string>
-    <string name="turn_on">ENABLE</string>
-    <string name="turn_off">DISABLE</string>
     <string name="message_toggle_startup">Runs on start-up</string>
     <string name="text_delay_remove">Delay remove</string>
     <string name="hint_delay_remove">After X seconds</string>
+    <string name="button_activate">ACTIVATE</string>
     <string name="button_change_destination">Change the destination</string>
     <string name="button_exit">Exit</string>
     <string name="button_exit_without_applying">Exit without apply</string>
