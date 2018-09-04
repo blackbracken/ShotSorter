@@ -3,6 +3,9 @@ package black.bracken.shotsorter.presenter
 import android.Manifest
 import android.app.Activity
 import android.content.Context
+import android.widget.Toast
+import black.bracken.shotsorter.R
+import black.bracken.shotsorter.ShotSorter
 import black.bracken.shotsorter.data.repository.singleSettingRepositoryModule
 import black.bracken.shotsorter.domain.repository.SettingRepository
 import black.bracken.shotsorter.service.SortService
@@ -13,6 +16,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
+import java.io.File
 
 /**
  * @author BlackBracken
@@ -29,6 +33,14 @@ class OperationPresenter(private val view: OperationView) : Presenter, KodeinAwa
         view.toggleStartupIsChecked(settingRepository.shouldRunOnStartup)
     }
 
+    fun onClickToChangeObservedDirectory() {
+        if (SortService.isRunning) {
+            Toast.makeText(ShotSorter.appContext, R.string.toast_cannot_change_observed, Toast.LENGTH_LONG).show()
+        } else {
+            view.openObservedDirectorySelector()
+        }
+    }
+
     fun onToggleActivate(isTurnedOn: Boolean, context: Context) {
         view.toggleActivateIsChecked(isTurnedOn)
 
@@ -42,6 +54,10 @@ class OperationPresenter(private val view: OperationView) : Presenter, KodeinAwa
     fun onToggleRunOnStartup(isTurnedOn: Boolean) {
         settingRepository.shouldRunOnStartup = isTurnedOn
         view.toggleStartupIsChecked(isTurnedOn)
+    }
+
+    fun onChangeObservedDirectory(directory: File) {
+        settingRepository.observedScreenshotDirectoryPath = "${directory.absolutePath}/"
     }
 
     fun requestPermissionsIfNeeded(activity: Activity) {

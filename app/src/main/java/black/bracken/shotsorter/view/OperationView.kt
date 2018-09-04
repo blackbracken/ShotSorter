@@ -9,6 +9,8 @@ interface OperationView {
 
     fun toggleStartupIsChecked(isTurnedOn: Boolean)
 
+    fun openObservedDirectorySelector()
+
     fun requestPermission()
 
 }

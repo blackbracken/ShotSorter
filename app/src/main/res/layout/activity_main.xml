@@ -20,29 +20,36 @@
             android:id="@+id/textTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="96dp"
             android:text="@string/app_name"
             android:textAlignment="center"
             android:textSize="30sp" />
-
-        <ImageView
-            android:id="@+id/imageTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="64dp"
-            app:srcCompat="@drawable/title_icon" />
 
         <ToggleButton
             android:id="@+id/toggleActivate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="64dp"
             android:text="@string/button_activate" />
 
         <Switch
             android:id="@+id/switchStartup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="36dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
             android:text="@string/message_toggle_startup" />
+
+        <Button
+            android:id="@+id/buttonChangeObservedDirectory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
+            android:text="@string/button_change_observed" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
