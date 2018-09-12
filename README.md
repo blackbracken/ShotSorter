@@ -11,4 +11,4 @@
 [releases](https://github.com/blackbracken/ShotSorter/releases)からどうぞ
 
 ## Environment
-* Android 7.0+
+* Android 6.0+
