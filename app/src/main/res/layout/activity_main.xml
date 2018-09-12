@@ -20,8 +20,8 @@
             android:id="@+id/textTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
             android:layout_marginBottom="96dp"
+            android:layout_marginTop="32dp"
             android:text="@string/app_name"
             android:textAlignment="center"
             android:textSize="30sp" />
@@ -31,7 +31,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="64dp"
-            android:text="@string/button_activate" />
+            android:text="@string/button_activate"
+            android:textOff="@string/button_activate"
+            android:textOn="@string/button_activate" />
 
         <Switch
             android:id="@+id/switchStartup"
